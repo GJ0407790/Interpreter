@@ -8,46 +8,54 @@ namespace token
 {
 
 enum class TokenType {
-    ILLEGAL,
-    ENDOFFILE,
-    
-    // Identifiers and literals
-    IDENT, // add, foobar, x, y, ...
-    INT,   // 123456
+	ILLEGAL,
+	ENDOFFILE,
+	
+	// Identifiers and literals
+	IDENT, // add, foobar, x, y, ...
+	INT,   // 123456
 
-    // Operators
-    ASSIGN,
-    PLUS,
+	// Operators
+	ASSIGN,
+	PLUS,
 
-    // Delimiters
-    COMMA,
-    SEMICOLON,
+	// Delimiters
+	COMMA,
+	SEMICOLON,
 
-    LPAREN,
-    RPAREN,
-    LBRACE,
-    RBRACE,
+	LPAREN,
+	RPAREN,
+	LBRACE,
+	RBRACE,
 
-    // Keywords
-    FUNCTION,
-    LET
+	// Keywords
+	FUNCTION,
+	LET
 };
 
-std::map<char, TokenType> CharToTokenType = {
-    {'=', TokenType::ASSIGN},
-    {'+', TokenType::PLUS},
-    {',', TokenType::COMMA},
-    {';', TokenType::SEMICOLON},
-    {'(', TokenType::LPAREN},
-    {')', TokenType::RPAREN},
-    {'{', TokenType::LBRACE},
-    {'}', TokenType::RBRACE},
+const std::map<char, TokenType> CharToTokenType = 
+{
+	{'=', TokenType::ASSIGN},
+	{'+', TokenType::PLUS},
+	{',', TokenType::COMMA},
+	{';', TokenType::SEMICOLON},
+	{'(', TokenType::LPAREN},
+	{')', TokenType::RPAREN},
+	{'{', TokenType::LBRACE},
+	{'}', TokenType::RBRACE},
 };
 
 class Token {
+public:
+	Token(TokenType tt, std::string literal) : 
+			_type{tt}, _literal{std::move(literal)} {}
+
+	bool operator==(const Token& rhs) const;
+	bool operator!=(const Token& rhs) const;
+
 private:
-    TokenType _type;
-    std::string _literal;
+	TokenType _type;
+	std::string _literal;
 };
 
 } //namespace token
