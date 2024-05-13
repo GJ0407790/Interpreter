@@ -20,8 +20,19 @@ public:
 	token::Token nextToken();
 
 private:
-		// Reads the current char and advance the _readPos
+	static	token::TokenType lookupIdent(const std::string& lit);
+
+	// Reads the current char and advance the _readPos
 	void readChar();
+
+	// Reads the entire indentifier starting from _pos
+	std::string readIdentifier();
+
+	// Reads the entire number starting from _pos
+	std::string readNumber();
+
+	// Skips all whitespaces
+	void skipWhiteSpaces();
 
 private:
 	std::string _input;

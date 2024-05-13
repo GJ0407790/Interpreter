@@ -1,6 +1,7 @@
 #ifndef TOKEN_HH
 #define TOKEN_HH
 
+#include <iostream>
 #include <map>
 #include <string>
 
@@ -43,6 +44,13 @@ const std::map<char, TokenType> CharToTokenType =
 	{')', TokenType::RPAREN},
 	{'{', TokenType::LBRACE},
 	{'}', TokenType::RBRACE},
+	{0  , TokenType::ENDOFFILE}
+};
+
+const std::map<std::string, TokenType> KeywordsToTokenType =
+{
+	{"let", TokenType::LET},
+	{"fn" , TokenType::FUNCTION}
 };
 
 class Token {
@@ -52,6 +60,11 @@ public:
 
 	bool operator==(const Token& rhs) const;
 	bool operator!=(const Token& rhs) const;
+	friend std::ostream& operator<<(std::ostream &out, const Token& token);
+
+	// getters
+	const std::string& getLiteral() const { return _literal; }
+	int getTokenType() const { return static_cast<int>(_type); }
 
 private:
 	TokenType _type;

@@ -13,4 +13,11 @@ bool Token::operator!=(const Token& rhs) const
   return _type != rhs._type || _literal != rhs._literal;
 }
 
+std::ostream& operator<<(std::ostream &out, const Token& token) 
+{
+  out << "(" << token.getTokenType() << ", " << token.getLiteral() << ")";
+
+  return out;
+}
+
 } //namespace token
