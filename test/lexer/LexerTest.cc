@@ -94,3 +94,69 @@ TEST(LexerTest, SimpleSrcCode)
 
   EXPECT_TRUE(compareTokens(expected_tokens, simple_src_code_str));
 }
+
+TEST(LexerTest, Operators)
+{
+  std::string operators_str = " \
+    !-/*5;                      \
+    5 < 10 > 5;                 \
+    if (5 < 10) {               \
+      return true;              \
+    } else {                    \
+      return false;             \
+    }";
+  
+  std::vector<Token> expected_tokens = {
+    {TokenType::BANG, "!"},
+    {TokenType::MINUS, "-"},
+    {TokenType::SLASH, "/"},
+    {TokenType::ASTERISK, "*"},
+    {TokenType::INT, "5"},
+    {TokenType::SEMICOLON, ";"},
+    {TokenType::INT, "5"},
+    {TokenType::LT, "<"},
+    {TokenType::INT, "10"},
+    {TokenType::GT, ">"},
+    {TokenType::INT, "5"},
+    {TokenType::SEMICOLON, ";"},
+    {TokenType::IF, "if"},
+    {TokenType::LPAREN, "("},
+    {TokenType::INT, "5"},
+    {TokenType::LT, "<"},
+    {TokenType::INT, "10"},
+    {TokenType::RPAREN, ")"},
+    {TokenType::LBRACE, "{"},
+    {TokenType::RETURN, "return"},
+    {TokenType::TRUE, "true"},
+    {TokenType::SEMICOLON, ";"},
+    {TokenType::RBRACE, "}"},
+    {TokenType::ELSE, "else"},
+    {TokenType::LBRACE, "{"},
+    {TokenType::RETURN, "return"},
+    {TokenType::FALSE, "false"},
+    {TokenType::SEMICOLON, ";"},
+    {TokenType::RBRACE, "}"},
+    {TokenType::ENDOFFILE, ""}
+  };
+
+  EXPECT_TRUE(compareTokens(expected_tokens, operators_str));  
+}
+
+TEST(LexerTest, TwoCharOperators)
+{
+  std::string two_char_operators_str = "10 == 10; 9 != 10;";
+
+  std::vector<Token> expected_tokens = {
+    {TokenType::INT, "10"},
+    {TokenType::EQ, "=="},
+    {TokenType::INT, "10"},
+    {TokenType::SEMICOLON, ";"},
+    {TokenType::INT, "9"},
+    {TokenType::NOT_EQ, "!="},
+    {TokenType::INT, "10"},
+    {TokenType::SEMICOLON, ";"},
+    {TokenType::ENDOFFILE, ""}
+  };
+
+  EXPECT_TRUE(compareTokens(expected_tokens, two_char_operators_str));   
+}

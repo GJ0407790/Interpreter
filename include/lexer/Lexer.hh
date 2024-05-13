@@ -24,6 +24,8 @@ private:
 
 	// Reads the current char and advance the _readPos
 	void readChar();
+	// Peaks the next char: for == and != operators
+	char peekChar() const;
 
 	// Reads the entire indentifier starting from _pos
 	std::string readIdentifier();

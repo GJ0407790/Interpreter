@@ -31,6 +31,18 @@ void Lexer::readChar()
 	_read_pos++;
 }
 
+char Lexer::peekChar() const 
+{
+	if (_read_pos > _input.size()) 
+	{
+			return 0;
+	} 
+	else 
+	{
+		return _input[_read_pos];
+	}
+}
+
 std::string Lexer::readIdentifier()
 {
 	auto start = _pos;
@@ -90,6 +102,34 @@ Token Lexer::nextToken()
 		auto num = readNumber();
 
 		return Token{TokenType::INT, std::move(num)};
+	}
+	else if (_chr == '=')
+	{
+		auto curr_chr = std::string(1, _chr);
+		if (peekChar() == '=') 
+		{
+			readChar();
+			auto lit = curr_chr + std::string(1, _chr);
+			token = Token{TokenType::EQ, lit};
+		} 
+		else 
+		{
+			token = Token{TokenType::ASSIGN, curr_chr};
+		}
+	}
+	else if (_chr == '!')
+	{
+		auto curr_chr = std::string(1, _chr);
+		if (peekChar() == '=') 
+		{
+			readChar();
+			auto lit = curr_chr + std::string(1, _chr);
+			token = Token{TokenType::NOT_EQ, lit};
+		} 
+		else 
+		{
+			token = Token{TokenType::BANG, curr_chr};
+		}
 	}
 
 	readChar(); // read the next char

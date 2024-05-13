@@ -19,6 +19,14 @@ enum class TokenType {
 	// Operators
 	ASSIGN,
 	PLUS,
+	MINUS,
+	BANG,
+	ASTERISK,
+	SLASH,
+	LT,
+	GT,
+	EQ,
+	NOT_EQ,
 
 	// Delimiters
 	COMMA,
@@ -31,13 +39,22 @@ enum class TokenType {
 
 	// Keywords
 	FUNCTION,
-	LET
+	LET,
+	TRUE,
+	FALSE,
+	IF,
+	ELSE,
+	RETURN
 };
 
 const std::map<char, TokenType> CharToTokenType = 
 {
-	{'=', TokenType::ASSIGN},
 	{'+', TokenType::PLUS},
+	{'-', TokenType::MINUS},
+	{'*', TokenType::ASTERISK},
+	{'/', TokenType::SLASH},
+	{'<', TokenType::LT},
+	{'>', TokenType::GT},
 	{',', TokenType::COMMA},
 	{';', TokenType::SEMICOLON},
 	{'(', TokenType::LPAREN},
@@ -50,7 +67,12 @@ const std::map<char, TokenType> CharToTokenType =
 const std::map<std::string, TokenType> KeywordsToTokenType =
 {
 	{"let", TokenType::LET},
-	{"fn" , TokenType::FUNCTION}
+	{"fn" , TokenType::FUNCTION},
+	{"true", TokenType::TRUE},
+	{"false", TokenType::FALSE},
+	{"if", TokenType::IF},
+	{"else", TokenType::ELSE},
+	{"return", TokenType::RETURN}
 };
 
 class Token {
