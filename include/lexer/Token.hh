@@ -86,7 +86,7 @@ public:
 
 	// getters
 	const std::string& getLiteral() const { return _literal; }
-	int getTokenType() const { return static_cast<int>(_type); }
+	TokenType getTokenType() const { return _type; }
 
 private:
 	TokenType _type;
