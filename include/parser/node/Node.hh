@@ -3,6 +3,10 @@
 
 #include <string>
 
+#include "../../lexer/Token.hh"
+
+namespace ast
+{
 namespace node 
 {
 
@@ -10,9 +14,14 @@ class Node
 {
 public:
   // For debugging and testing purpose: print out the literal value
-  const std::string& tokenLiteral() const; 
+  virtual const std::string& tokenLiteral() const = 0; 
+
+private:
+  token::Token _token;
 };
 
-} //namespace node
 
-#endif
+} //namespace node
+} //namespace ast
+
+#endif // NODE_HH

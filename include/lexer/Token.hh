@@ -77,6 +77,8 @@ const std::map<std::string, TokenType> KeywordsToTokenType =
 
 class Token {
 public:
+	Token() : _type{TokenType::ILLEGAL}, _literal{} {}
+
 	Token(TokenType tt, std::string literal) : 
 			_type{tt}, _literal{std::move(literal)} {}
 
