@@ -3,6 +3,7 @@
 using namespace token;
 using namespace ast;
 using namespace ast::program;
+using namespace ast::statement;
 
 namespace parser
 {
@@ -43,7 +44,7 @@ StatementPtr Parser::parseStatement()
 
 StatementPtr Parser::parseLetStatement()
 {
-  
+  auto let_statement = std::make_shared<LetStatement>(_cur_token);
 }
 
 } //namespace parser

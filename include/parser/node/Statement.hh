@@ -15,6 +15,10 @@ class StatementNode : public node::Node
 
 class LetStatement : public StatementNode
 {
+
+protected:
+  bool _equals(const Node& other) const;
+  
 private:
   expression::NonValueIdentifierNode _name;
 };
