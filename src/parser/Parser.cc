@@ -1,3 +1,5 @@
+#include <sstream>
+
 #include "../../include/parser/Parser.hh"
 
 using namespace token;
@@ -12,7 +14,7 @@ Program Parser::parseProgram()
 {
   Program program;
 
-  while (_cur_token.getTokenType() != TokenType::ENDOFFILE)
+  while (_cur_token.getTokenType() != TokenType::END_OF_FILE)
   {
     auto statement = parseStatement();
 
@@ -41,6 +43,16 @@ bool Parser::nextTokenIs(TokenType token_type)
   return _next_token.getTokenType() == token_type;
 }
 
+void Parser::expectMismatchError(TokenType token_type)
+{
+  std::ostringstream os;
+
+  os << "Expected next_token to be of token_type=" << token::TokenTypeToString.at(token_type) 
+     << ", got " << token::TokenTypeToString.at(_next_token.getTokenType());
+  
+  _errors.push_back(os.str());
+}
+
 bool Parser::expectNext(TokenType token_type)
 {
   if (nextTokenIs(token_type))
@@ -49,6 +61,7 @@ bool Parser::expectNext(TokenType token_type)
     return true;
   }
 
+  expectMismatchError(token_type);
   return false;
 }
 
@@ -59,6 +72,7 @@ StatementPtr Parser::parseStatement()
   case TokenType::LET:
     return parseLetStatement();
   default:
+    nextToken();
     return nullptr;
   }  
 }
@@ -78,6 +92,7 @@ StatementPtr Parser::parseLetStatement()
 
   if (!expectNext(TokenType::IDENT))
   {
+    nextToken();
     return nullptr;
   }
 

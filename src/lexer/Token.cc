@@ -15,7 +15,7 @@ bool Token::operator!=(const Token& rhs) const
 
 std::ostream& operator<<(std::ostream &out, const Token& token) 
 {
-  out << "(" << static_cast<int>(token.getTokenType()) << ", " << token.getLiteral() << ")";
+  out << "(" << TokenTypeToString.at(token.getTokenType()) << ", " << token.getLiteral() << ")";
 
   return out;
 }
