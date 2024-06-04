@@ -19,7 +19,7 @@ class Program
 public:
   void addStatement(StatementPtr statement);
 
-private:
+public:
   std::vector<StatementPtr> _statements;
 };
 

@@ -13,11 +13,15 @@ namespace node
 class Node 
 {
 public:
+  Node() = default;
+
   Node(token::Token token) 
     : _token{std::move(token)} {}
 
   // For debugging and testing purpose: print out the literal value
   virtual const std::string& tokenLiteral() const; 
+
+  virtual void printInfo(std::ostream &out) const;
 
   bool operator==(const Node& other) const {
     return this->_equals(other);
@@ -26,6 +30,9 @@ public:
   bool operator!=(const Node& other) const {
     return !(*this == other);
   }
+
+   // For debugging purpose
+  friend std::ostream& operator<<(std::ostream &out, const Node& token);
 
 protected:
   // derived class will override this function to change the equality check

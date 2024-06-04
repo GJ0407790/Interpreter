@@ -11,6 +11,8 @@ namespace expression
 class IdentifierNode : public node::Node 
 {
 public:
+  IdentifierNode() {}
+
   IdentifierNode(token::Token token)
     : Node(std::move(token)) {}
 };
@@ -23,6 +25,8 @@ public:
 class NonValueIdentifierNode : public IdentifierNode
 {
 public:
+  NonValueIdentifierNode() {}
+
   NonValueIdentifierNode(token::Token token)
     : IdentifierNode{std::move(token)} {}
 

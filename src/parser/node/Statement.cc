@@ -2,8 +2,15 @@
 
 namespace ast
 {
+using namespace expression;
+
 namespace statement
 {
+
+void LetStatement::setName(token::Token token)
+{
+  _name = NonValueIdentifierNode(std::move(token));
+}
 
 bool LetStatement::_equals(const Node& other) const
 {
@@ -20,6 +27,14 @@ bool LetStatement::_equals(const Node& other) const
   }
   
   return StatementNode::_equals(other);
+}
+
+void LetStatement::printInfo(std::ostream &out) const
+{
+  Node::printInfo(out);
+  out << "\n";
+
+  out << "_name: " << _name;
 }
 
 } //namespace statement

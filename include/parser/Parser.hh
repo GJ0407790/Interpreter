@@ -24,9 +24,20 @@ private:
   // Advance the token pointers to the next token
   void nextToken();
 
-  // Check the token type and call the respective function
+  // helper functions
+  
+  // Check whether the tokens are of the correct type
+  bool curTokenIs(token::TokenType token_type);
+  bool nextTokenIs(token::TokenType token_type);
+
+  // Check if the next token has the same type as token_type
+  // If so, advance the token pointer. Otherwise, return false.
+  bool expectNext(token::TokenType token_type);
+
+  // Check the token type and call the respective function (below)
   ast::StatementPtr parseStatement();
 
+  // Functions for parsing a specific type of statement
   ast::StatementPtr parseLetStatement();
 
 private:

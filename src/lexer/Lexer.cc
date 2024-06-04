@@ -77,7 +77,7 @@ void Lexer::skipWhiteSpaces()
 
 Token Lexer::nextToken()
 {
-	auto token = Token{TokenType::ILLEGAL, ""};
+	auto token = Token{};
 
 	// skip all the spaces before continuing on the next token
 	skipWhiteSpaces();
