@@ -15,6 +15,10 @@ public:
     : Node(std::move(token)) {}
 };
 
+/* A typical let statement:
+ * 
+ * let x = y + 1 * z;
+ */
 class LetStatement : public StatementNode
 {
 public:
@@ -27,13 +31,29 @@ public:
   // Construct _name from a given token. Assume that the token is correct
   void setName(token::Token token);
 
-  virtual void printInfo(std::ostream &out) const override;
+  const std::string toString() const override;
 
 protected:
   bool _equals(const Node& other) const;
   
 private:
-  expression::NonValueIdentifierNode _name;
+  expression::Identifier _name;
+};
+
+/* An expression statement is a line that consist only of expression, e.g.
+ *  - x + 1;
+ *  - f(y + g(z));
+ */
+class ExpressionStatement : public StatementNode
+{
+public:
+  ExpressionStatement(token::Token token)
+    : StatementNode(std::move(token)) {}
+  
+  const std::string toString() const override;
+
+private:
+  expression::Expression _expression;
 };
 
 } //namespace statement

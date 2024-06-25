@@ -20,14 +20,9 @@ bool Node::_equals(const Node& other) const
   return this->_token == other._token;
 }
 
-void Node::printInfo(std::ostream &out) const
-{
-  out << "Node token: " << _token;
-}
-
 std::ostream& operator<<(std::ostream &out, const Node& node) 
 {
-  node.printInfo(out);
+  out << node.toString();
 
   return out;
 }

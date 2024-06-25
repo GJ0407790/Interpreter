@@ -19,6 +19,9 @@ class Program
 public:
   void addStatement(StatementPtr statement);
 
+  // Print out the all statements in string
+  const std::string toString() const;
+  
 public:
   std::vector<StatementPtr> _statements;
 };

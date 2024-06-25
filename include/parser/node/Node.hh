@@ -2,6 +2,7 @@
 #define NODE_HH
 
 #include <string>
+#include <sstream>
 
 #include "../../lexer/Token.hh"
 
@@ -20,8 +21,8 @@ public:
 
   // For debugging and testing purpose: print out the literal value
   virtual const std::string& tokenLiteral() const; 
-
-  virtual void printInfo(std::ostream &out) const;
+  // Print out the AST node value to compare with other AST nodes
+  virtual const std::string toString() const = 0;
 
   bool operator==(const Node& other) const {
     return this->_equals(other);

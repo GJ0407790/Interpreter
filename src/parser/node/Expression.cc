@@ -5,17 +5,35 @@ namespace ast
 namespace expression
 {
 
-bool NonValueIdentifierNode::_equals(const Node& other) const
+bool Expression::_equals(const Node& other) const
 {
   if (typeid(*this) != typeid(other))
   {
     return false;
   }
 
-  // There are no members in NonValueIdentifierNode
-  // If there is, need to check the equality of each member here
+  auto that = static_cast<const Expression&>(other);
+  
+  if (this->_value != that._value)
+  {
+    return false;
+  }
 
-  return IdentifierNode::_equals(other);
+  return Node::_equals(other);
+}
+
+const std::string Expression::toString() const
+{
+  return "";
+}
+
+const std::string Identifier::toString() const
+{
+  std::ostringstream os;
+  
+  os << tokenLiteral();
+
+  return os.str();
 }
 
 } //namespace expresison

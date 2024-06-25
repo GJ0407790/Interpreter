@@ -8,37 +8,35 @@ namespace ast
 namespace expression
 {
 
-class IdentifierNode : public node::Node 
+class Identifier : public node::Node
 {
 public:
-  IdentifierNode() {}
+  Identifier() {}
 
-  IdentifierNode(token::Token token)
+  Identifier(token::Token token)
     : Node(std::move(token)) {}
+  
+  const std::string toString() const override;
 };
 
-/* There are 2 types of identifier: one that produces value and one that does not
- * 
- * For example, "let x = y;".
- * In this statement, "x" does not produce any value, whereas "y" does.
- */
-class NonValueIdentifierNode : public IdentifierNode
+class Expression : public node::Node 
 {
 public:
-  NonValueIdentifierNode() {}
+  Expression() {}
 
-  NonValueIdentifierNode(token::Token token)
-    : IdentifierNode{std::move(token)} {}
+  Expression(token::Token token)
+    : Node(std::move(token)) {}
+
+  const std::string toString() const override;
 
 protected:
   bool _equals(const Node& other) const;
+
+private:
+  std::string _value; // The value it produces
 };
 
-class ValueIdentifierNode : public IdentifierNode
-{
-private:
-  std::string _value;
-};
+
 
 } //namespace expression
 } //namespace ast

@@ -9,7 +9,7 @@ namespace statement
 
 void LetStatement::setName(token::Token token)
 {
-  _name = NonValueIdentifierNode(std::move(token));
+  _name = Identifier(std::move(token));
 }
 
 bool LetStatement::_equals(const Node& other) const
@@ -29,12 +29,23 @@ bool LetStatement::_equals(const Node& other) const
   return StatementNode::_equals(other);
 }
 
-void LetStatement::printInfo(std::ostream &out) const
+const std::string LetStatement::toString() const
 {
-  Node::printInfo(out);
-  out << "\n";
+  std::ostringstream os;
+  
+  // [TODO]: Add the value in
+  os << this->tokenLiteral() << " " << _name.toString() << " = ";
 
-  out << "_name: " << _name;
+  return os.str();
+}
+
+const std::string ExpressionStatement::toString() const
+{
+  std::ostringstream os;
+  
+  os << _expression.toString();
+
+  return os.str();
 }
 
 } //namespace statement

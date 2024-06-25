@@ -1,11 +1,18 @@
 #ifndef PARSER_HH
 #define PARSER_HH
 
+#include <functional>
+#include <map>
+
 #include "../lexer/Lexer.hh"
 #include "program/Program.hh"
 
 namespace parser
 {
+
+using prefixParseFn = std::function<expression::Expression()>;
+// takes in a left expression as an argument
+using infixParseFn  = std::function<expression::Expression(expression::Expression)>;
 
 class Parser 
 {
@@ -31,6 +38,17 @@ private:
   void nextToken();
 
   // helper functions
+
+  // Register the token type to the appropriate functions
+  void registerPrefix(token::TokenType tt, prefixParseFn prefix_fn)
+  {
+    prefix_parse_fn_map[tt] = prefix_fn;
+  }
+
+  void registerInfix(token::TokenType tt, infixParseFn infix_fn)
+  {
+    infix_parse_fn_map[tt] = infix_fn;
+  }
   
   // Check whether the tokens are of the correct type
   bool curTokenIs(token::TokenType token_type);
@@ -54,6 +72,9 @@ private:
   token::Token _cur_token;
   token::Token _next_token;
   std::vector<std::string> _errors;
+
+  std::map<token::TokenType, prefixParseFn> prefix_parse_fn_map;
+  std::map<token::TokenType, infixParseFn> infix_parse_fn_map;
 };
 
 } //namespace parser

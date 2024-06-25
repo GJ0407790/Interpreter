@@ -50,30 +50,19 @@ testing::AssertionResult compareStatements(std::vector<StatementPtr>& expected_s
   return testing::AssertionSuccess();
 }
 
-// TEST(ParserTest, BasicLetStatement) 
-// {
-//   std::string let_statements_str = " \
-//     let x = 5;                     \
-//     let y = 10;                     \
-//     let foobar = 838383;";
-
-//   std::vector<StatementPtr> expected_statements = {
-//     std::make_shared<statement::LetStatement>(Token{TokenType::LET, "let"}, Token{TokenType::IDENT, "x"}),
-//     std::make_shared<statement::LetStatement>(Token{TokenType::LET, "let"}, Token{TokenType::IDENT, "y"}),
-//     std::make_shared<statement::LetStatement>(Token{TokenType::LET, "let"}, Token{TokenType::IDENT, "foobar"})
-//   };
-
-//   EXPECT_TRUE(compareStatements(expected_statements, let_statements_str));
-// }
-
-TEST(ParserTest, BasicLetStatementParseFail) 
+TEST(ParserTest, BasicLetStatement) 
 {
   std::string let_statements_str = " \
-    let 5;";
+    let x = 5;                     \
+    let y = 10;                     \
+    let foobar = 838383;";
 
   std::vector<StatementPtr> expected_statements = {
     std::make_shared<statement::LetStatement>(Token{TokenType::LET, "let"}, Token{TokenType::IDENT, "x"}),
+    std::make_shared<statement::LetStatement>(Token{TokenType::LET, "let"}, Token{TokenType::IDENT, "y"}),
+    std::make_shared<statement::LetStatement>(Token{TokenType::LET, "let"}, Token{TokenType::IDENT, "foobar"})
   };
 
-  EXPECT_FALSE(compareStatements(expected_statements, let_statements_str));
+  EXPECT_TRUE(compareStatements(expected_statements, let_statements_str));
 }
+
