@@ -71,9 +71,10 @@ StatementPtr Parser::parseStatement()
   {
   case TokenType::LET:
     return parseLetStatement();
+  case TokenType::RETURN:
+    return parseReturnStatement();
   default:
-    nextToken();
-    return nullptr;
+    return parseExpressionStatement();
   }  
 }
 
@@ -113,6 +114,29 @@ StatementPtr Parser::parseLetStatement()
 
   nextToken();
   return let_statement;
+}
+
+StatementPtr Parser::parseReturnStatement()
+{
+  auto return_statement = std::make_shared<ReturnStatement>(_cur_token);
+
+  // TODO: Read equal and RHS expression
+  while (!curTokenIs(TokenType::SEMICOLON))
+  {
+    nextToken();
+  }
+
+  nextToken();
+  return return_statement;
+}
+
+StatementPtr Parser::parseExpressionStatement()
+{
+  auto expr_statement = std::make_shared<ExpressionStatement>(_cur_token);
+
+  // auto expr = parseExpression(Precedence::LOWEST);
+
+  return expr_statement;
 }
 
 } //namespace parser

@@ -8,17 +8,6 @@ namespace ast
 namespace expression
 {
 
-class Identifier : public node::Node
-{
-public:
-  Identifier() {}
-
-  Identifier(token::Token token)
-    : Node(std::move(token)) {}
-  
-  const std::string toString() const override;
-};
-
 class Expression : public node::Node 
 {
 public:
@@ -28,15 +17,21 @@ public:
     : Node(std::move(token)) {}
 
   const std::string toString() const override;
+};
 
-protected:
-  bool _equals(const Node& other) const;
+class Identifier : public Expression
+{
+public:
+  Identifier() {}
+
+  Identifier(token::Token token, std::string val)
+    : Expression(std::move(token)), _value{std::move(val)} {}
+  
+  const std::string toString() const override;
 
 private:
   std::string _value; // The value it produces
 };
-
-
 
 } //namespace expression
 } //namespace ast

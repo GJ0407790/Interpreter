@@ -7,43 +7,61 @@ using namespace expression;
 namespace statement
 {
 
+/*******************************************************************************************/
+/*******************************   LET STATEMENT   *****************************************/
+/*******************************************************************************************/
+
 void LetStatement::setName(token::Token token)
 {
-  _name = Identifier(std::move(token));
-}
-
-bool LetStatement::_equals(const Node& other) const
-{
-  if (typeid(*this) != typeid(other))
-  {
-    return false;
-  }
-            
-  auto that = static_cast<const LetStatement&>(other);
-  
-  if (this->_name != that._name)
-  {
-    return false;
-  }
-  
-  return StatementNode::_equals(other);
+  auto literal = token.getLiteral();
+  _name = std::make_unique<Identifier>(std::move(token), std::move(literal));
 }
 
 const std::string LetStatement::toString() const
 {
   std::ostringstream os;
   
-  // [TODO]: Add the value in
-  os << this->tokenLiteral() << " " << _name.toString() << " = ";
+  os << this->tokenLiteral() << " ";
+  
+  if (_name != nullptr)
+  {
+    os << _name->toString();
+  }
+  
+  os  << " = "; 
+  
+  if (_value != nullptr)
+  {
+    os << _value->toString();
+  }
+
+  os << ";";
 
   return os.str();
 }
+
+/*******************************************************************************************/
+/*****************************   RETURN STATEMENT   ****************************************/
+/*******************************************************************************************/
+
+const std::string ReturnStatement::toString() const
+{
+  std::ostringstream os;
+  
+  os << this->tokenLiteral() << " " << _return_value->toString() << ";";
+
+  return os.str();
+}
+
+/*******************************************************************************************/
+/***************************   EXPRESSION STATEMENT   **************************************/
+/*******************************************************************************************/
 
 const std::string ExpressionStatement::toString() const
 {
   std::ostringstream os;
   
-  os << _expression.toString();
+  os << _expression->toString();
 
   return os.str();
 }

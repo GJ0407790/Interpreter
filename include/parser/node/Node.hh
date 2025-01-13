@@ -24,20 +24,8 @@ public:
   // Print out the AST node value to compare with other AST nodes
   virtual const std::string toString() const = 0;
 
-  bool operator==(const Node& other) const {
-    return this->_equals(other);
-  };
-
-  bool operator!=(const Node& other) const {
-    return !(*this == other);
-  }
-
    // For debugging purpose
   friend std::ostream& operator<<(std::ostream &out, const Node& token);
-
-protected:
-  // derived class will override this function to change the equality check
-  virtual bool _equals(const Node& other) const;
 
 private:
   token::Token _token;

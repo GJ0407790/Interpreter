@@ -20,7 +20,7 @@ testing::AssertionResult checkAnyErrors(parser::Parser& parser)
   return testing::AssertionSuccess();
 }
 
-testing::AssertionResult compareStatements(std::vector<StatementPtr>& expected_statements, std::string& input)
+testing::AssertionResult compareStatements(std::vector<std::string>& expected_statements_str, std::string& input)
 {
   auto parser = parser::Parser{input};
   auto program = parser.parseProgram();
@@ -32,16 +32,16 @@ testing::AssertionResult compareStatements(std::vector<StatementPtr>& expected_s
 
   size_t idx = 0;
 
-  for (const auto& statement : expected_statements) 
+  for (const auto& statement_str : expected_statements_str) 
   {
     if (program._statements.size() <= idx)
     {
       return testing::AssertionFailure() << "Program has insufficient statements!\n"; 
     }
 
-    if (*statement != *(program._statements[idx]))
+    if (statement_str != program._statements[idx]->toString())
     {
-      return testing::AssertionFailure() << "Expected: " << *statement << ", got: " << *(program._statements[idx]) << "\n"; 
+      return testing::AssertionFailure() << "Expected: " << statement_str << ", got: " << program._statements[idx]->toString(); 
     }
 
     idx++;
@@ -57,10 +57,10 @@ TEST(ParserTest, BasicLetStatement)
     let y = 10;                     \
     let foobar = 838383;";
 
-  std::vector<StatementPtr> expected_statements = {
-    std::make_shared<statement::LetStatement>(Token{TokenType::LET, "let"}, Token{TokenType::IDENT, "x"}),
-    std::make_shared<statement::LetStatement>(Token{TokenType::LET, "let"}, Token{TokenType::IDENT, "y"}),
-    std::make_shared<statement::LetStatement>(Token{TokenType::LET, "let"}, Token{TokenType::IDENT, "foobar"})
+  std::vector<std::string> expected_statements = {
+    "let x = ;",
+    "let y = ;",
+    "let foobar = ;"
   };
 
   EXPECT_TRUE(compareStatements(expected_statements, let_statements_str));

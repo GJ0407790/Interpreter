@@ -9,10 +9,20 @@
 
 namespace parser
 {
-
-using prefixParseFn = std::function<expression::Expression()>;
+using prefixParseFn = std::function<ast::expression::Expression()>;
 // takes in a left expression as an argument
-using infixParseFn  = std::function<expression::Expression(expression::Expression)>;
+using infixParseFn  = std::function<ast::expression::Expression(ast::expression::Expression)>;
+
+enum class Precedence
+{
+  LOWEST = 0,
+  EQUALS = 1,      // ==
+  LESSGREATER = 2, // > or <
+  SUM = 3,         // +
+  PRODUCT = 4,     // *
+  PREFIX = 5,      // ++x
+  FNCALL = 6,      // fn(x)
+};
 
 class Parser 
 {
@@ -23,6 +33,9 @@ public:
     // and _next_token points to the second
     nextToken();
     nextToken();
+
+    // register infix functions
+    
   }
 
   ast::program::Program parseProgram();
@@ -63,9 +76,14 @@ private:
 
   // Check the token type and call the respective function (below)
   ast::StatementPtr parseStatement();
-
+  
   // Functions for parsing a specific type of statement
   ast::StatementPtr parseLetStatement();
+  ast::StatementPtr parseReturnStatement();
+  ast::StatementPtr parseExpressionStatement();
+
+  // The core function: parsing expression
+  ast::statement::ExpressionPtr parseExpression(Precedence prec);
 
 private:
   lexer::Lexer _lexer;
